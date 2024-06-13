@@ -1,11 +1,10 @@
-This image shows a computer screen displaying an integrated development environment (IDE), specifically Visual Studio Code (VS Code), with a code file open. The file is named `main_0.py` and appears to contain Python code for creating a GUI (Graphical User Interface) application using PyQt5, a set of Python bindings for the Qt application framework.
-
-The code includes a class definition for `OverlayWindow1` which inherits from `QMainWindow`. The class contains methods for initializing the window properties such as setting the window title, size, and style. There's also a QPushButton added to the window, and some CSS styling applied for the button, including a background color, text color, and font properties.
-
-On the left-hand side, there's a sidebar showing more files and folders in the project, with a folder named "VO Coach CK 2 (Prototype)" and several Python files, indicating this might be part of a larger software project or prototype related to an application named "VO Coach".
-
-There's also an output panel open at the bottom showing messages about unknown properties, which may indicate that there are some issues or warnings that need to be addressed in the code or the CSS related to the properties like 'cursor' and 'display'.
-
-The debugging and settings toolbar is visible at the top, with icons for managing the coding environment and controlling the execution of applications.
-
-Overall, the image depicts a typical setup and workflow for a software developer working on a graphical application in Python with PyQt5 in the VS
+- This image is a screenshot of the video game Crusader Kings II.
+- It displays a large map of Europe, including parts of France, Spain, England, Germany, Italy, and surrounding regions.
+- Various territories are highlighted with borders and heraldic shields indicating control by different rulers.
+- The date shown in the top right corner is 3 March, 1337.
+- The player is controlling or viewing information about a character represented by a portrait in the top left corner.
+- Several interface icons and buttons are present along the top and sides indicating game features such as military status, council, and notifications.
+- A tooltip at the bottom right provides information about the province of Locha Léin including details like terrain (plains), climate (mild winter), and military information (supply limit: 28.75k).
+- The bottom right corner also contains a small map overview.
+- The selected province appears to be underlined and highlighted.
+- Several troops and armies are indicated on the map with icons and numbers.
