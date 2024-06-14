@@ -34,11 +34,8 @@ class OverlayWindow_1(QMainWindow):
                 padding: 14px 26px;         /* Some padding */
                 text-align: center;         /* Centered text */
                 text-decoration: none;      /* No underline */
-                display: inline-block;      /* Inline-block */
                 font-size: 16px;            /* Increase font size */
                 margin: 4px 2px;            /* Some margin */
-                transition-duration: 0.4s;  /* 0.4 seconds transition effect */
-                cursor: pointer;            /* Pointer/hand icon */
                 border-radius: 6px;
             }
             QPushButton:hover {
@@ -63,11 +60,8 @@ class OverlayWindow_1(QMainWindow):
                 padding: 14px 26px;         /* Some padding */
                 text-align: center;         /* Centered text */
                 text-decoration: none;      /* No underline */
-                display: inline-block;      /* Inline-block */
                 font-size: 16px;            /* Increase font size */
                 margin: 4px 2px;            /* Some margin */
-                transition-duration: 0.4s;  /* 0.4 seconds transition effect */
-                cursor: pointer;            /* Pointer/hand icon */
                 border-radius: 6px;
             }
             QPushButton:hover {
@@ -110,11 +104,32 @@ class OverlayWindow_1(QMainWindow):
                 border: none;               /* No border */
                 text-align: center;         /* Centered text */
                 text-decoration: none;      /* No underline */
-                display: inline-block;      /* Inline-block */
                 font-size: 16px;            /* Increase font size */
                 margin: 4px 2px;            /* Some margin */
-                transition-duration: 0.4s;  /* 0.4 seconds transition effect */
-                cursor: pointer;            /* Pointer/hand icon */
+                border-radius: 6px;
+            }
+            QPushButton:hover {
+                background-color: white;    /* White background on hover */
+                color: black;               /* Black text on hover */
+                border: 2px solid #f44336;  /* Red border on hover */
+            }
+        """)
+
+#* Button to run Run_script_text 
+        self.button3 = QPushButton('Talk to me', self)
+        self.button3.setGeometry(300, 155, 100, 40)
+        self.button3.clicked.connect(self.run_script_text)
+        self.button3.setStyleSheet("""
+            QPushButton {
+                background-color: #f44336;  /* Red background */
+                color: white;               /* White text */
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                font-weight: 800;
+                border: none;               /* No border */
+                text-align: center;         /* Centered text */
+                text-decoration: none;      /* No underline */
+                font-size: 16px;            /* Increase font size */
+                margin: 4px 2px;            /* Some margin */
                 border-radius: 6px;
             }
             QPushButton:hover {
@@ -137,11 +152,8 @@ class OverlayWindow_1(QMainWindow):
                 border: none;               /* No border */
                 text-align: center;         /* Centered text */
                 text-decoration: none;      /* No underline */
-                display: inline-block;      /* Inline-block */
                 font-size: 16px;            /* Increase font size */
                 margin: 4px 2px;            /* Some margin */
-                transition-duration: 0.4s;  /* 0.4 seconds transition effect */
-                cursor: pointer;            /* Pointer/hand icon */
                 border-radius: 6px;
             }
             QPushButton:hover {
@@ -150,6 +162,7 @@ class OverlayWindow_1(QMainWindow):
                 border: 2px solid #f44336;  /* Red border on hover */
             }
         """)
+
 #* Button-5 to run the script for the GPT (To be combined with run screenshots)
         self.button5 = QPushButton('Run GPT', self)
         self.button5.setGeometry(400, 155, 100, 40)
@@ -163,11 +176,8 @@ class OverlayWindow_1(QMainWindow):
                 border: none;               /* No border */
                 text-align: center;         /* Centered text */
                 text-decoration: none;      /* No underline */
-                display: inline-block;      /* Inline-block */
                 font-size: 16px;            /* Increase font size */
                 margin: 4px 2px;            /* Some margin */
-                transition-duration: 0.4s;  /* 0.4 seconds transition effect */
-                cursor: pointer;            /* Pointer/hand icon */
                 border-radius: 6px;
             }
             QPushButton:hover {
@@ -185,7 +195,7 @@ class OverlayWindow_1(QMainWindow):
         user_input = self.textbox.text()
         print(f"User input: {user_input} saved")  # Printing input in the terminal
 
-        with open(file_path, "a") as file:  # Saving the file
+        with open(file_path, "w") as file:  # Saving the file
             file.write(user_input + "\n")
 
         self.textbox.clear()
@@ -228,6 +238,12 @@ class OverlayWindow_1(QMainWindow):
     def run_script(self):
         script_path = os.path.join(os.path.dirname(__file__), 'main_1_docs.py')
         subprocess.run(['python', script_path])
+
+#!Linked script to run input from text 
+    def run_script_text(self):
+        script_path = os.path.join(os.path.dirname(__file__), './main_3_textOutput.py')
+        subprocess.run(['python', script_path])
+
 #!Fxn to open Window-2
     def open_window_2(self):
         self.window2 = OverlayWindow_2()  # Create an instance of Window2
@@ -241,7 +257,8 @@ class OverlayWindow_2(QMainWindow):
     def __init__(self):
         super().__init__()
         self.initUI()
-        self.load_text_from_file()  # Load text when initializing
+        # self.load_text_from_file()  # Load text when initializing of sss
+        self.load_text_from_file_2()
 
     def initUI(self):
         self.setWindowTitle('Overlay')
@@ -269,11 +286,8 @@ class OverlayWindow_2(QMainWindow):
                 padding: 14px 26px;         /* Some padding */
                 text-align: center;         /* Centered text */
                 text-decoration: none;      /* No underline */
-                display: inline-block;      /* Inline-block */
                 font-size: 16px;            /* Increase font size */
                 margin: 4px 2px;            /* Some margin */
-                transition-duration: 0.4s;  /* 0.4 seconds transition effect */
-                cursor: pointer;            /* Pointer/hand icon */
                 border-radius: 6px;
             }
             QPushButton:hover {
@@ -297,11 +311,8 @@ class OverlayWindow_2(QMainWindow):
                 padding: 14px 26px;         /* Some padding */
                 text-align: center;         /* Centered text */
                 text-decoration: none;      /* No underline */
-                display: inline-block;      /* Inline-block */
                 font-size: 16px;            /* Increase font size */
                 margin: 4px 2px;            /* Some margin */
-                transition-duration: 0.4s;  /* 0.4 seconds transition effect */
-                cursor: pointer;            /* Pointer/hand icon */
                 border-radius: 6px;
             }
             QPushButton:hover {
@@ -325,11 +336,8 @@ class OverlayWindow_2(QMainWindow):
                 padding: 14px 26px;         /* Some padding */
                 text-align: center;         /* Centered text */
                 text-decoration: none;      /* No underline */
-                display: inline-block;      /* Inline-block */
                 font-size: 16px;            /* Increase font size */
                 margin: 4px 2px;            /* Some margin */
-                transition-duration: 0.4s;  /* 0.4 seconds transition effect */
-                cursor: pointer;            /* Pointer/hand icon */
                 border-radius: 6px;
             }
             QPushButton:hover {
@@ -338,7 +346,6 @@ class OverlayWindow_2(QMainWindow):
                 border: 2px solid #795dec;  /* Green border on hover */
             }
         """)
-
 
 #*Adding button4
         self.button4 = QPushButton('Window 1', self)
@@ -354,11 +361,8 @@ class OverlayWindow_2(QMainWindow):
                 padding: 14px 26px;         /* Some padding */
                 text-align: center;         /* Centered text */
                 text-decoration: none;      /* No underline */
-                display: inline-block;      /* Inline-block */
                 font-size: 16px;            /* Increase font size */
                 margin: 4px 2px;            /* Some margin */
-                transition-duration: 0.4s;  /* 0.4 seconds transition effect */
-                cursor: pointer;            /* Pointer/hand icon */
                 border-radius: 6px;
             }
             QPushButton:hover {
@@ -382,11 +386,8 @@ class OverlayWindow_2(QMainWindow):
                 padding: 14px 26px;         /* Some padding */
                 text-align: center;         /* Centered text */
                 text-decoration: none;      /* No underline */
-                display: inline-block;      /* Inline-block */
                 font-size: 16px;            /* Increase font size */
                 margin: 4px 2px;            /* Some margin */
-                transition-duration: 0.4s;  /* 0.4 seconds transition effect */
-                cursor: pointer;            /* Pointer/hand icon */
                 border-radius: 6px;
             }
             QPushButton:hover {
@@ -397,7 +398,7 @@ class OverlayWindow_2(QMainWindow):
         """)
 
 
-    #*Adding textbox_2 to display text 
+#*Adding textbox_2 to display text (read only)
         vbox = QVBoxLayout()
         self.textbox_2 = QTextEdit(self)
         # self.textbox = QLineEdit(self)
@@ -422,11 +423,11 @@ class OverlayWindow_2(QMainWindow):
                 border: 2px solid #4CAF50;  /* Green border on focus */
             }
         """)
+
 #!Function to quit the window
     def exit_window(self):
         sys.exit(app.exec_())
 
-    
 #!Function to load output in the Window-2 textbox
     def load_text_from_file(self):
         Text_Folder = "./"
@@ -438,6 +439,19 @@ class OverlayWindow_2(QMainWindow):
                 self.textbox_2.setText(content)
         else:
             self.textbox_2.setText("No input file found.")
+
+#!Function to load output in the Window-2 textbox
+    def load_text_from_file_2(self):
+        Text_Folder = "./"
+        file_path = os.path.join(Text_Folder, "output_Assistant.txt")
+
+        if os.path.exists(file_path):
+            with open(file_path, "r") as file:
+                content = file.read()
+                self.textbox_2.setText(content)
+        else:
+            self.textbox_2.setText("No input file found.")
+
 
 #!Function for the addition of the suggestion box
     def on_suggestion_selected(self, item):
