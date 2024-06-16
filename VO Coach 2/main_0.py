@@ -52,7 +52,7 @@ class OverlayWindow_1(QMainWindow):
         self.button2.clicked.connect(self.schedule_screenshot)
         self.button2.setStyleSheet("""
             QPushButton {
-                background-color: #f44336;  /* Red background */
+                background-color: #958938;  /* Red background */
                 color: white;               /* White text */
                 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
                 font-weight: 800;
@@ -97,7 +97,7 @@ class OverlayWindow_1(QMainWindow):
         self.button3.clicked.connect(self.save_input)
         self.button3.setStyleSheet("""
             QPushButton {
-                background-color: #f44336;  /* Red background */
+                background-color: #1ea2bd;  /* Red background */
                 color: white;               /* White text */
                 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
                 font-weight: 800;
@@ -118,10 +118,10 @@ class OverlayWindow_1(QMainWindow):
 #* Button to run Run_script_text 
         self.button3 = QPushButton('Talk to me', self)
         self.button3.setGeometry(300, 155, 100, 40)
-        self.button3.clicked.connect(self.run_script_text)
+        self.button3.clicked.connect(self.userInput_and_sss)
         self.button3.setStyleSheet("""
             QPushButton {
-                background-color: #f44336;  /* Red background */
+                background-color: #1ea2bd;  /* Red background */
                 color: white;               /* White text */
                 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
                 font-weight: 800;
@@ -169,7 +169,7 @@ class OverlayWindow_1(QMainWindow):
         self.button5.clicked.connect(self.run_script)
         self.button5.setStyleSheet("""
             QPushButton {
-                background-color: #bdbdbd;  /* Red background */
+                background-color: #958938;  /* Red background */
                 color: white;               /* White text */
                 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
                 font-weight: 800;
@@ -199,6 +199,18 @@ class OverlayWindow_1(QMainWindow):
             file.write(user_input + "\n")
 
         self.textbox.clear()
+
+#!Calling run_script and saving the textbox input function simultaneously with single button click
+    # def saveText_and_runScript(self):
+    #     # Not able to clear the textbar is one major problem
+    #     self.save_input()
+    #     self.run_script_text()
+
+#!Function for calling combined sss and user query input
+    def userInput_and_sss(self):
+        script_path = os.path.join(os.path.dirname(__file__), './main_1_combined_Text_SSS.py')
+        subprocess.run(['python', script_path])
+
     
 #!Clearing the input in the textbox
     def clear_input(self):

@@ -1,10 +1,10 @@
-import sys
-import subprocess
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QColor, QPainter
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLineEdit, QTextEdit, QVBoxLayout, QFileDialog,QListWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLineEdit, QTextEdit
 import os
-
+import sys
+import openai
+import base64
 
 class OverlayWindow_1(QMainWindow):
     def __init__(self):
@@ -13,475 +13,258 @@ class OverlayWindow_1(QMainWindow):
 
     def initUI(self):
         self.setWindowTitle('Overlay')
-        self.setGeometry(200, 100, 600, 250)#Dimensions of window
-        # | Qt.FramelessWindowHint
-        self.setWindowFlags(Qt.WindowStaysOnTopHint| Qt.FramelessWindowHint )
-        # self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint | Qt.WindowTransparentForInput)
+        self.setGeometry(200, 100, 600, 400)
+        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setStyleSheet("background:rgba(0, 0, 0, 0.7);")
 
-#* Adding button1
+        # Adding button to open Window 2
         self.button1 = QPushButton('Window 2', self)
         self.button1.clicked.connect(self.open_window_2)
-        self.button1.setGeometry(80, 100, 200, 60)
-        self.button1.setStyleSheet("""
-            QPushButton {
-                background-color: #4CAF50;  /* Green background */
-                color: white;               /* White text */
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                font-weight: 800;
-                border: none;               /* No border */
-                padding: 14px 26px;         /* Some padding */
-                text-align: center;         /* Centered text */
-                text-decoration: none;      /* No underline */
-                font-size: 16px;            /* Increase font size */
-                margin: 4px 2px;            /* Some margin */
-                border-radius: 6px;
-            }
-            QPushButton:hover {
-                background-color: white;    /* White background on hover */
-                color: black;               /* Black text on hover */
-                border: 2px solid #4CAF50;  /* Green border on hover */
-            }
-        """)
+        self.button1.setGeometry(80, 300, 200, 60)
+        self.button1.setStyleSheet(self.button_style("#4CAF50"))
 
-#* Adding button2 for screenshot
+        # Adding button to take screenshot
         self.button2 = QPushButton('Take Screenshot', self)
-        self.button2.setGeometry(80, 100, 200, 60)
-        self.button2.move(300, 100)
+        self.button2.setGeometry(300, 300, 200, 60)
         self.button2.clicked.connect(self.schedule_screenshot)
-        self.button2.setStyleSheet("""
-            QPushButton {
-                background-color: #f44336;  /* Red background */
-                color: white;               /* White text */
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                font-weight: 800;
-                border: none;               /* No border */
-                padding: 14px 26px;         /* Some padding */
-                text-align: center;         /* Centered text */
-                text-decoration: none;      /* No underline */
-                font-size: 16px;            /* Increase font size */
-                margin: 4px 2px;            /* Some margin */
-                border-radius: 6px;
-            }
-            QPushButton:hover {
-                background-color: white;    /* White background on hover */
-                color: black;               /* Black text on hover */
-                border: 2px solid #f44336;  /* Red border on hover */
-            }
-        """)
+        self.button2.setStyleSheet(self.button_style("#f44336"))
 
-#* Adding textBox_1
+        # Adding textbox for user input
         self.textbox = QLineEdit(self)
         self.textbox.setPlaceholderText("Enter text here...")
-        self.textbox.setGeometry(50, 30, 300, 50)
-        self.textbox.setStyleSheet("""
+        self.textbox.setGeometry(50, 30, 500, 50)
+        self.textbox.setStyleSheet(self.textbox_style())
+
+        # Adding button to save input
+        self.button3 = QPushButton('Enter', self)
+        self.button3.setGeometry(400, 90, 150, 40)
+        self.button3.clicked.connect(self.save_input)
+        self.button3.setStyleSheet(self.button_style("#f44336"))
+
+        # Adding button to clear input
+        self.button4 = QPushButton('Clear', self)
+        self.button4.setGeometry(400, 140, 150, 40)
+        self.button4.clicked.connect(self.clear_input)
+        self.button4.setStyleSheet(self.button_style("#bdbdbd"))
+
+        # Adding textbox for the question
+        self.question_box = QLineEdit(self)
+        self.question_box.setPlaceholderText("Ask a question about the screenshot...")
+        self.question_box.setGeometry(50, 180, 500, 50)
+        self.question_box.setStyleSheet(self.textbox_style())
+
+        # Adding button to process screenshot and question
+        self.button5 = QPushButton('Ask Question', self)
+        self.button5.setGeometry(400, 240, 150, 40)
+        self.button5.clicked.connect(self.process_screenshot_and_question)
+        self.button5.setStyleSheet(self.button_style("#4CAF50"))
+
+    def button_style(self, color):
+        return f"""
+            QPushButton {{
+                background-color: {color};
+                color: white;
+                font-family: 'Lucida Sans', sans-serif;
+                font-weight: 800;
+                border: none;
+                padding: 14px 26px;
+                text-align: center;
+                font-size: 16px;
+                margin: 4px 2px;
+                border-radius: 6px;
+            }}
+            QPushButton:hover {{
+                background-color: white;
+                color: black;
+                border: 2px solid {color};
+            }}
+        """
+
+    def textbox_style(self):
+        return """
             QLineEdit {
-                background-color: rgba(255, 255, 255, 0.7); /* Slightly transparent white background */
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                background-color: rgba(255, 255, 255, 0.7);
+                font-family: 'Lucida Sans', sans-serif;
                 font-weight: 600;
-                color: black;                               /* Black text */
-                padding: 10px;                              /* Some padding */
-                border: 2px solid #cccccc;                  /* Gray border */
-                border-radius: 10px;                        /* Rounded corners */
-                font-size: 16px;                            /* Increase font size */
+                color: black;
+                padding: 10px;
+                border: 2px solid #cccccc;
+                border-radius: 10px;
+                font-size: 16px;
             }
             QLineEdit:focus {
-                border: 2px solid #4CAF50;  /* Green border on focus */
+                border: 2px solid #4CAF50;
             }
-        """)
+        """
 
-#* Button-3 to enter and store the text into the a .txt file
-        self.button3 = QPushButton('Enter', self)
-        self.button3.setGeometry(400, 15, 100, 40)
-        self.button3.clicked.connect(self.save_input)
-        self.button3.setStyleSheet("""
-            QPushButton {
-                background-color: #f44336;  /* Red background */
-                color: white;               /* White text */
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                font-weight: 800;
-                border: none;               /* No border */
-                text-align: center;         /* Centered text */
-                text-decoration: none;      /* No underline */
-                font-size: 16px;            /* Increase font size */
-                margin: 4px 2px;            /* Some margin */
-                border-radius: 6px;
-            }
-            QPushButton:hover {
-                background-color: white;    /* White background on hover */
-                color: black;               /* Black text on hover */
-                border: 2px solid #f44336;  /* Red border on hover */
-            }
-        """)
-
-#* Button to run Run_script_text 
-        self.button3 = QPushButton('Talk to me', self)
-        self.button3.setGeometry(300, 155, 100, 40)
-        self.button3.clicked.connect(self.run_script_text)
-        self.button3.setStyleSheet("""
-            QPushButton {
-                background-color: #f44336;  /* Red background */
-                color: white;               /* White text */
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                font-weight: 800;
-                border: none;               /* No border */
-                text-align: center;         /* Centered text */
-                text-decoration: none;      /* No underline */
-                font-size: 16px;            /* Increase font size */
-                margin: 4px 2px;            /* Some margin */
-                border-radius: 6px;
-            }
-            QPushButton:hover {
-                background-color: white;    /* White background on hover */
-                color: black;               /* Black text on hover */
-                border: 2px solid #f44336;  /* Red border on hover */
-            }
-        """)
-
-#* Button-4 to clear the textbox
-        self.button4 = QPushButton('Clear', self)
-        self.button4.setGeometry(400, 55, 100, 40)
-        self.button4.clicked.connect(self.clear_input)
-        self.button4.setStyleSheet("""
-            QPushButton {
-                background-color: #bdbdbd;  /* Red background */
-                color: white;               /* White text */
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                font-weight: 800;
-                border: none;               /* No border */
-                text-align: center;         /* Centered text */
-                text-decoration: none;      /* No underline */
-                font-size: 16px;            /* Increase font size */
-                margin: 4px 2px;            /* Some margin */
-                border-radius: 6px;
-            }
-            QPushButton:hover {
-                background-color: white;    /* White background on hover */
-                color: black;               /* Black text on hover */
-                border: 2px solid #f44336;  /* Red border on hover */
-            }
-        """)
-
-#* Button-5 to run the script for the GPT (To be combined with run screenshots)
-        self.button5 = QPushButton('Run GPT', self)
-        self.button5.setGeometry(400, 155, 100, 40)
-        self.button5.clicked.connect(self.run_script)
-        self.button5.setStyleSheet("""
-            QPushButton {
-                background-color: #bdbdbd;  /* Red background */
-                color: white;               /* White text */
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                font-weight: 800;
-                border: none;               /* No border */
-                text-align: center;         /* Centered text */
-                text-decoration: none;      /* No underline */
-                font-size: 16px;            /* Increase font size */
-                margin: 4px 2px;            /* Some margin */
-                border-radius: 6px;
-            }
-            QPushButton:hover {
-                background-color: white;    /* White background on hover */
-                color: black;               /* Black text on hover */
-                border: 2px solid #f44336;  /* Red border on hover */
-            }
-        """)
-    
-#!Saving Textbox input
     def save_input(self):
         Text_Folder = "User_Inputs"
+        os.makedirs(Text_Folder, exist_ok=True)  # Ensure the folder exists
         file_path = os.path.join(Text_Folder, "user_Input.txt")
-
         user_input = self.textbox.text()
-        print(f"User input: {user_input} saved")  # Printing input in the terminal
-
-        with open(file_path, "w") as file:  # Saving the file
+        print(f"User input: {user_input} saved")
+        with open(file_path, "w") as file:
             file.write(user_input + "\n")
-
         self.textbox.clear()
-    
-#!Clearing the input in the textbox
+
     def clear_input(self):
         self.textbox.clear()
 
-#!Adding a fxn to delay the input
     def schedule_screenshot(self):
         QTimer.singleShot(1000, self.prepare_screenshot)
 
-#!Hiding the window for screenshot( 1.5s )
     def prepare_screenshot(self):
-        # Hide the entire window before taking the screenshot
         self.hide()
         QTimer.singleShot(1500, self.take_screenshot)
 
-#!Taking screenshots 
     def take_screenshot(self):
         screenshot_folder = "User_Inputs"
+        os.makedirs(screenshot_folder, exist_ok=True)  # Ensure the folder exists
         screen = QApplication.primaryScreen()
         screenshot = screen.grabWindow(0)
-
         file_name = "screenshot_.png"
         file_path = os.path.join(screenshot_folder, file_name)
         screenshot.save(file_path, 'png')
         print(f"Screenshot saved to {file_path}")
+        self.show()
 
-        self.show() #Show the window again
+    def process_screenshot_and_question(self):
+        screenshot_folder = "User_Inputs"
+        screenshot_path = os.path.join(screenshot_folder, "screenshot_.png")
+        question = self.question_box.text()
 
-#!Colors of the window
-    def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
-        painter.setBrush(QColor(0, 0, 0, 120))  # Changing the color of bg window
-        painter.drawRect(self.rect())
+        # Call a function to process the screenshot and question
+        response = self.process_with_gpt(screenshot_path, question)
+        print(f"Response: {response}")
 
-#!Linked script to run 
-    def run_script(self):
-        script_path = os.path.join(os.path.dirname(__file__), 'main_1_docs.py')
-        subprocess.run(['python', script_path])
+        # Optionally, display the response in a new window or textbox
 
-#!Linked script to run input from text 
-    def run_script_text(self):
-        script_path = os.path.join(os.path.dirname(__file__), './main_3_textOutput.py')
-        subprocess.run(['python', script_path])
+    def process_with_gpt(self, screenshot_path, question):
+        # OpenAI GPT-4 integration to process the screenshot and question
+        openai.api_key = "sk-proj-SCZ8qegWu2hEGGWlgbyJT3BlbkFJj7Pqi8BYVJUBO4qVX1Aq"
 
-#!Fxn to open Window-2
+        with open(screenshot_path, "rb") as image_file:
+            image_data = image_file.read()
+        
+        # Use a new model and proper API call for GPT-3.5-turbo
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "Read images and provide a description of the image along with query provided by the user"},
+                {"role": "user", "content": f"Here is a screenshot of some code: {screenshot_path}\nQuestion: {question}\nAnswer:"}
+            ]
+        )
+        return response.choices[0].message["content"].strip()
+
     def open_window_2(self):
-        self.window2 = OverlayWindow_2()  # Create an instance of Window2
+        self.window2 = OverlayWindow_2()
         self.window2.show()
         self.hide()
 
-
-#!----------------------------------------Defining another class: Window-2 to execute it upon a button click------------------------------------------------------!#
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing)
+        painter.setBrush(QColor(0, 0, 0, 120))
+        painter.drawRect(self.rect())
 
 class OverlayWindow_2(QMainWindow):
     def __init__(self):
         super().__init__()
         self.initUI()
-        # self.load_text_from_file()  # Load text when initializing of sss
-        self.load_text_from_file_2()
+        self.load_text_from_file()
 
     def initUI(self):
         self.setWindowTitle('Overlay')
         self.setGeometry(200, 100, 600, 600)
-        # |Qt.FramelessWindowHint
-        self.setWindowFlags(Qt.WindowStaysOnTopHint| Qt.FramelessWindowHint)
+        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setStyleSheet("background:rgba(0, 0, 0, 0.7);")
-        self.setWindowTitle("Window 2")
-        # Add any other widgets or functionality for Window2 here
 
-#!Adding a button to go back to previous window
-
-#*Adding button1
         self.button1 = QPushButton('Window 1 clr', self)
-        self.button1.clicked.connect(self.open_window_1 )
+        self.button1.clicked.connect(self.open_window_1)
         self.button1.setGeometry(400, 40, 200, 60)
-        self.button1.setStyleSheet("""
-            QPushButton {
-                background-color: #795dec;  /* Green background */
-                color: white;               /* White text */
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                font-weight: 800;
-                border: none;               /* No border */
-                padding: 14px 26px;         /* Some padding */
-                text-align: center;         /* Centered text */
-                text-decoration: none;      /* No underline */
-                font-size: 16px;            /* Increase font size */
-                margin: 4px 2px;            /* Some margin */
-                border-radius: 6px;
-            }
-            QPushButton:hover {
-                background-color: white;    /* White background on hover */
-                color: black;               /* Black text on hover */
-                border: 2px solid #795dec;  /* Green border on hover */
-            }
-        """)
+        self.button1.setStyleSheet(self.button_style("#795dec"))
 
-#*Adding button2
         self.button2 = QPushButton('Window 1', self)
         self.button2.clicked.connect(self.open_window_1)
         self.button2.setGeometry(400, 120, 200, 60)
-        self.button2.setStyleSheet("""
-            QPushButton {
-                background-color: #795dec;  /* Green background */
-                color: white;               /* White text */
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                font-weight: 800;
-                border: none;               /* No border */
-                padding: 14px 26px;         /* Some padding */
-                text-align: center;         /* Centered text */
-                text-decoration: none;      /* No underline */
-                font-size: 16px;            /* Increase font size */
-                margin: 4px 2px;            /* Some margin */
-                border-radius: 6px;
-            }
-            QPushButton:hover {
-                background-color: white;    /* White background on hover */
-                color: black;               /* Black text on hover */
-                border: 2px solid #795dec;  /* Green border on hover */
-            }
-        """)
+        self.button2.setStyleSheet(self.button_style("#795dec"))
 
-#*Adding button3
         self.button3 = QPushButton('Window 1', self)
         self.button3.clicked.connect(self.open_window_1)
         self.button3.setGeometry(400, 200, 200, 60)
-        self.button3.setStyleSheet("""
-            QPushButton {
-                background-color: #795dec;  /* Green background */
-                color: white;               /* White text */
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                font-weight: 800;
-                border: none;               /* No border */
-                padding: 14px 26px;         /* Some padding */
-                text-align: center;         /* Centered text */
-                text-decoration: none;      /* No underline */
-                font-size: 16px;            /* Increase font size */
-                margin: 4px 2px;            /* Some margin */
-                border-radius: 6px;
-            }
-            QPushButton:hover {
-                background-color: white;    /* White background on hover */
-                color: black;               /* Black text on hover */
-                border: 2px solid #795dec;  /* Green border on hover */
-            }
-        """)
+        self.button3.setStyleSheet(self.button_style("#795dec"))
 
-#*Adding button4
         self.button4 = QPushButton('Window 1', self)
         self.button4.clicked.connect(self.open_window_1)
         self.button4.setGeometry(400, 280, 200, 60)
-        self.button4.setStyleSheet("""
-            QPushButton {
-                background-color: #795dec;  /* Green background */
-                color: white;               /* White text */
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        self.button4.setStyleSheet(self.button_style("#795dec"))
+
+        self.textbox = QTextEdit(self)
+        self.textbox.setReadOnly(True)
+        self.textbox.setGeometry(40, 40, 340, 500)
+        self.textbox.setStyleSheet(self.textbox_style())
+
+    def button_style(self, color):
+        return f"""
+            QPushButton {{
+                background-color: {color};
+                color: white;
+                font-family: 'Lucida Sans', sans-serif;
                 font-weight: 800;
-                border: none;               /* No border */
-                padding: 14px 26px;         /* Some padding */
-                text-align: center;         /* Centered text */
-                text-decoration: none;      /* No underline */
-                font-size: 16px;            /* Increase font size */
-                margin: 4px 2px;            /* Some margin */
+                border: none;
+                padding: 14px 26px;
+                text-align: center;
+                font-size: 16px;
+                margin: 4px 2px;
                 border-radius: 6px;
-            }
-            QPushButton:hover {
-                background-color: white;    /* White background on hover */
-                color: black;               /* Black text on hover */
-                border: 2px solid #795dec;  /* Green border on hover */
-            }
-        """)
+            }}
+            QPushButton:hover {{
+                background-color: white;
+                color: black;
+                border: 2px solid {color};
+            }}
+        """
 
-#*Adding button5 for exiting the window
-        self.button5 = QPushButton('Quit', self)
-        self.button5.clicked.connect(self.exit_window)
-        self.button5.setGeometry(400, 360, 200, 60)
-        self.button5.setStyleSheet("""
-            QPushButton {
-                background-color: #800000;  /* Green background */
-                color: white;               /* White text */
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                font-weight: 800;
-                border: none;               /* No border */
-                padding: 14px 26px;         /* Some padding */
-                text-align: center;         /* Centered text */
-                text-decoration: none;      /* No underline */
-                font-size: 16px;            /* Increase font size */
-                margin: 4px 2px;            /* Some margin */
-                border-radius: 6px;
-            }
-            QPushButton:hover {
-                background-color: black;    /* White background on hover */
-                color: red;               /* Black text on hover */
-                border: 2px solid red;  /* Green border on hover */
-            }
-        """)
-
-
-#*Adding textbox_2 to display text (read only)
-        vbox = QVBoxLayout()
-        self.textbox_2 = QTextEdit(self)
-        # self.textbox = QLineEdit(self)
-        self.textbox_2.setReadOnly(True)
-        self.textbox_2.setText('Initial Text')
-        vbox.addWidget(self.textbox_2)
-        self.setLayout(vbox)
-        self.textbox_2.setGeometry(30, 15, 360, 360)
-        self.textbox_2.setStyleSheet("""
+    def textbox_style(self):
+        return """
             QTextEdit {
-                background-color: rgba(255, 255, 255, 0.7); /* Slightly transparent white background */
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                background-color: rgba(255, 255, 255, 0.7);
+                font-family: 'Lucida Sans', sans-serif;
                 font-weight: 600;
-                color: #008f11;
-                background-color: #0D0208;  
-                padding: 10px;                              /* Some padding */
-                border: 2px solid #cccccc;                  /* Gray border */
-                border-radius: 10px;                        /* Rounded corners */
-                font-size: 16px;                            /* Increase font size */
+                color: black;
+                padding: 10px;
+                border: 2px solid #cccccc;
+                border-radius: 10px;
+                font-size: 16px;
             }
-            QLineEdit:focus {
-                border: 2px solid #4CAF50;  /* Green border on focus */
+            QTextEdit:focus {
+                border: 2px solid #795dec;
             }
-        """)
+        """
 
-#!Function to quit the window
-    def exit_window(self):
-        sys.exit(app.exec_())
-
-#!Function to load output in the Window-2 textbox
     def load_text_from_file(self):
-        Text_Folder = "./"
-        file_path = os.path.join(Text_Folder, "output.txt")
+        Text_Folder = "User_Inputs"
+        os.makedirs(Text_Folder, exist_ok=True)  # Ensure the folder exists
+        file_path = os.path.join(Text_Folder, "user_Input.txt")
+        with open(file_path, "r") as file:
+            text = file.read()
+            self.textbox.setText(text)
 
-        if os.path.exists(file_path):
-            with open(file_path, "r") as file:
-                content = file.read()
-                self.textbox_2.setText(content)
-        else:
-            self.textbox_2.setText("No input file found.")
-
-#!Function to load output in the Window-2 textbox
-    def load_text_from_file_2(self):
-        Text_Folder = "./"
-        file_path = os.path.join(Text_Folder, "output_Assistant.txt")
-
-        if os.path.exists(file_path):
-            with open(file_path, "r") as file:
-                content = file.read()
-                self.textbox_2.setText(content)
-        else:
-            self.textbox_2.setText("No input file found.")
-
-
-#!Function for the addition of the suggestion box
-    def on_suggestion_selected(self, item):
-        suggestion = item.text()
-        # Generate output based on the suggestion
-        output = f"Output for {suggestion}"
-        self.output_textbox.setText(output)
-    
-#!Colors of the window
-    def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
-        painter.setBrush(QColor(0, 0, 0, 120))  # Changing the color of bg window
-        painter.drawRect(self.rect())
-
-        self.show()
- 
-#!Function to shift back to window_1
     def open_window_1(self):
-        self.window1 = OverlayWindow_1()  # Create an instance of Window2
+        self.window1 = OverlayWindow_1()
         self.window1.show()
         self.hide()
 
-#!Function to clear the saved info from textbox
-    def clear_input(self):
-        self.textbox_2.clear()
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing)
+        painter.setBrush(QColor(0, 0, 0, 120))
+        painter.drawRect(self.rect())
 
-#!Showing the final window
-if __name__ == '__main__':
+if __name__ == "__main__":
     app = QApplication(sys.argv)
-    overlay = OverlayWindow_1()
-    overlay.show()
+    window1 = OverlayWindow_1()
+    window1.show()
     sys.exit(app.exec_())

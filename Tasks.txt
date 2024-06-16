@@ -30,7 +30,7 @@ Completed tasks
 SS Summary is also provided into a txt file named as output.txt 
 Answers to user query exported into a txt file as output_Assistant
 player filter => identity and Relational data to be searched in top 3 categories
-
+combined output for the textbox and SSS
 
 Still Remaining 
 Combining the button to run multiple function simultaneously

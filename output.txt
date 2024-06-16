@@ -1,43 +1,30 @@
-Certainly! Here is the description of the image in bullet points:
+The image provided appears to be a screenshot of Visual Studio Code (VS Code). Below are the key elements present in the image:
 
-- **Background image:**
-  - A character is standing on rocky terrain, facing a colossal fortress with tall, spike-like structures and an ominous sky with aerial vehicles or creatures hovering above.
+- **Explorer Panel (Left Sidebar):**
+  - Several directories and files listed:
+    - `User_Inputs`
+    - `Fonts`
+    - `screenshot_png`
+    - `user_Input.txt`
+    - `VO Coach 2`
+      - `main_0.py`
+      - `main_0 copy.py` (highlighted)
+      - `main_1_docs.py`
+      - `main_1_combined_Text_SSS.py`
+      - `main_1_VO_incomplete.py`
+      - `main_1_tesseract_Noty.py`
+      - `main_3_textOutput.py`
+      - `main_4_embed_UL_ssy.py`
+      - `main_implementation.py`
+      - `main_newFxnCombined.py`
+      - `main_2 (Prototype)`
+    - `embeddings_output.txt`
+    - `README.md`
+    - `suggestionBox.py`
+    - `Tasks.txt`
 
-- **Desktop icons (left side):**
-  - Top row: 
-    - Recycle Bin
-    - Twitch Studio
-    - A folder named "GOT_1"
-  - Second row:
-    - Proton VPN
-    - Power BI Desktop
-  - Third row:
-    - Epic Games Launcher
-    - MySQL Workbench
-  - Fourth row:
-    - Hotspot Shield
-    - VALORANT
-  - Fifth row:
-    - Blender 3.4
-    - Prince of Persia (incomplete name)
-  - Sixth row:
-    - Discord
-    - Steam
-  - Seventh row:
-    - Unity Hub
-    - Counter-Strike: Source
-  - Eighth row:
-    - Kaspersky VPN
-    - Crusader Kings II
+- **Editor Pane (Center) with an open file (`main_0 copy.py`):**
+  - Contains Python code related to creating an overlay window using PyQt5 library.
+  - Includes definitions for buttons (`button1` and `button2`) with various properties such as `setGeometry`, `clicked.connect`, `setStyleSheet`, etc.
 
-- **Desktop icons (right side):**
-  - Top row:
-    - A folder named "CK2 App(Incomplete)"
-    - Visual Studio 2022
-  - Second row:
-    - A folder named "VoCoach+P (Incomplete)"
-    - Notes
-  - Third row:
-    - A folder named "VO Coach of CK-2 (Prototype)"
-    - Visual Studio Code
-  - Fourth row:
+- **Terminal Panel (Bottom
