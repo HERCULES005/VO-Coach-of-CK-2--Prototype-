@@ -489,6 +489,7 @@ class OverlayWindow_1(QMainWindow):
     def userInput_and_sss(self):
         script_path = os.path.join(os.path.dirname(__file__), './main_1_combined_Text_SSS.py')
         subprocess.run(['python', script_path])
+        self.open_window_2()
 
     
 #!Clearing the input in the textbox
@@ -501,7 +502,6 @@ class OverlayWindow_1(QMainWindow):
 
 #!Hiding the window for screenshot( 1.5s )
     def prepare_screenshot(self):
-        # Hide the entire window before taking the screenshot
         self.hide()
         QTimer.singleShot(1500, self.take_screenshot)
 
@@ -550,8 +550,9 @@ class OverlayWindow_2(QMainWindow):
     def __init__(self):
         super().__init__()
         self.initUI()
-        self.load_text_from_file()  # Load text when initializing of sss
-        # self.load_text_from_file_2()
+          # Load text when initializing of sss
+        self.load_text_from_file_2()
+        # self.load_text_from_file()
 
     def initUI(self):
         self.setWindowTitle('Overlay')
@@ -746,11 +747,11 @@ class OverlayWindow_2(QMainWindow):
 
 
 #!Function for the addition of the suggestion box
-    def on_suggestion_selected(self, item):
-        suggestion = item.text()
-        # Generate output based on the suggestion
-        output = f"Output for {suggestion}"
-        self.output_textbox.setText(output)
+    # def on_suggestion_selected(self, item):
+    #     suggestion = item.text()
+    #     # Generate output based on the suggestion
+    #     output = f"Output for {suggestion}"
+    #     self.output_textbox.setText(output)
     
 #!Colors of the window
     def paintEvent(self, event):

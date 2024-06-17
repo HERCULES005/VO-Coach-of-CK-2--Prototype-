@@ -70,8 +70,8 @@ content_2 = output
 # print(f"content_1 = {content} and \n \n \n content_2 = {content_2}")
 print(f"content_1 = {content}")
 
-# with open("output.txt", "w") as outfile:
-#     outfile.write(content)
+with open("output_Assistant.txt", "w") as outfile:
+    outfile.write(content)
 
 end = time.time()
 

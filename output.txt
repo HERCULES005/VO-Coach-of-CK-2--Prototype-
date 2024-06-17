@@ -1,24 +1,24 @@
-- The image shows a Visual Studio Code (VS Code) workspace.
-- There is a left sidebar with the "EXPLORER" tab opened, showing a list of files and folders, including:
-  - `User_Inputs`
-  - `Fonts`
-  - Various Python files (`main_1.py`, `main_1_ocr.py`, etc.)
-  - README.md
-  - embeddings_output.txt
-  - Tasks.txt
-- The main focus is on the editor area, showing a Python script `main_0.py`.
-- The script includes several function calls (`button1`, `button2`, etc.) and some comments explaining the code.
-- The top of the editor area shows multiple open tabs, including:
-  - `main_1_docs.py`
-  - `main_1.py`
-  - `main_0.py` (currently active)
-  - `embeddings_output.txt`
-  - `main_5_minimizeButton.py`
-- Overlays on the screen with buttons labeled:
-  - "Enter"
-  - "Clear"
-  - "Talk to me"
-  - "Window 2"
-  - "Window 0"
-- There's a terminal open at the bottom of the workspace, showing some execution output and error messages.
-- The status bar at the bottom indicates the file type as Python ('.py') and some other details like line number and text encoding.
+The image depicts a screenshot of the Visual Studio Code environment working on a Python project. Below is a detailed description of the screenshot content:
+
+- **Editor:**
+  - Visual Studio Code (VS Code) interface in use.
+  - Left sidebar showing files in the project directory.
+    - Folders and files include:
+      - `User_Inputs`
+      - `Fonts`
+      - `screenshot.png`
+      - `User_Input.txt`
+      - Several Python files such as `main_0.py`, `main_1_docs.py`, `main_1_combined_Text_SSS.py`, `main_2_AddedBackend.py`, etc.
+  - The main editor window is displaying the `main_1_docs.py` file.
+    - Python code defining a class `OverlayWindow2`, inheriting from `QMainWindow`.
+    - The code contains UI setup with button styling and text box initialization comments.
+- **Overlay Window:**
+  - Black background with green text:
+    - Describes the context stating that it's a Python project developed in VS Code with a script named `main_0.py`.
+    - Mention of UI setup and a terminal response indicating an event loop is already running.
+  - Buttons:
+    - `Window 1 clr` (lavender color)
+    - `Window 1` (light blue color)
+    - `Window 1` (light blue color)
+    - `Window 1` (light blue color)
+    - `
