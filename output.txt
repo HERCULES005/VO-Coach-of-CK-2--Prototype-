@@ -1,23 +1,25 @@
-- The image is a screenshot of a Spotify web player.
-- The URL in the search bar is `https://open.spotify.com/search/rock`.
-- The user has searched for "rock".
-- The genre "Rock" is selected.
-- The screen is divided into a navigation pane on the left, a main content area in the center, and a detail section on the right.
-- The navigation pane on the left includes:
-  - Home
-  - Search
-  - A section for "Your Library".
-  - Playlists including:
-    - Liked Songs with 345 songs
-    - Schrödinger ka pila by Paras
-    - Rona Mat Saif Bhai by TanhaAnjum
-    - Yaadram ki playlist by mishrasays
-    - Punjabi by Hercules 05
-    - English by Hercules 05
-- In the search results under "Rock", the following sections are shown:
-  - Tabs for All, Albums, Songs, Artists, Playlists, Podcasts & Shows, and Profiles.
-  - Under the "Songs" tab, songs with their artists and durations displayed:
-    - "Jo Bhi Main" by Mohit Chauhan (4:33)
-    - "Nadaan Parinde" by A.R. Rahman, Mohit Chauhan (6:24)
-    - "Tum Ho" by Mohit Chauhan, Suzanne D'Mello (5:16)
-    - "Phir Se Ud Chala" by
+The image depicts an open window of Visual Studio Code (VSCode) with the following details:
+
+- **Explorer Section:**
+  - Shows a file structure under "VO Coach of CK-2 (PROTOTYPE)".
+  - Subdirectories and files listed within the project include "User_Inputs," "Fonts," "screenshot_png," and "user_Input.txt."
+
+- **Main Editing Area:**
+  - The file "main_0.py" is open and active.
+  - Code relates to a class named `OverlayWindow`.
+  - The code defines several methods and buttons.
+  - Buttons to "Provide SSS," "Quit," and other functionality.
+  - Functions to quit the window and load output in another window.
+  
+- **Terminal:**
+  - A warning message indicating that PowerShell detected a possible screen reader usage, which disabled a feature.
+  - The terminal includes execution of a Python script from the directory "C:\Users\Hercules\Desktop\VO Coach of CK-2 (Prototype)" using Python version 3.12.3.
+  - User input in the terminal: "hello what is on the screen saved."
+
+- **Status Bar:**
+  - Displays the file path of the currently open file.
+  - Indicates that the VSCode is using Python and PowerShell.
+  - Shows the current line and column number, indentation settings, and file format (CRLF).
+
+- **Other UI Elements:**
+  - Top menu bar
