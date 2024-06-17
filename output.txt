@@ -1,30 +1,23 @@
-The image provided appears to be a screenshot of Visual Studio Code (VS Code). Below are the key elements present in the image:
-
-- **Explorer Panel (Left Sidebar):**
-  - Several directories and files listed:
-    - `User_Inputs`
-    - `Fonts`
-    - `screenshot_png`
-    - `user_Input.txt`
-    - `VO Coach 2`
-      - `main_0.py`
-      - `main_0 copy.py` (highlighted)
-      - `main_1_docs.py`
-      - `main_1_combined_Text_SSS.py`
-      - `main_1_VO_incomplete.py`
-      - `main_1_tesseract_Noty.py`
-      - `main_3_textOutput.py`
-      - `main_4_embed_UL_ssy.py`
-      - `main_implementation.py`
-      - `main_newFxnCombined.py`
-      - `main_2 (Prototype)`
-    - `embeddings_output.txt`
-    - `README.md`
-    - `suggestionBox.py`
-    - `Tasks.txt`
-
-- **Editor Pane (Center) with an open file (`main_0 copy.py`):**
-  - Contains Python code related to creating an overlay window using PyQt5 library.
-  - Includes definitions for buttons (`button1` and `button2`) with various properties such as `setGeometry`, `clicked.connect`, `setStyleSheet`, etc.
-
-- **Terminal Panel (Bottom
+- The image is a screenshot of a Spotify web player.
+- The URL in the search bar is `https://open.spotify.com/search/rock`.
+- The user has searched for "rock".
+- The genre "Rock" is selected.
+- The screen is divided into a navigation pane on the left, a main content area in the center, and a detail section on the right.
+- The navigation pane on the left includes:
+  - Home
+  - Search
+  - A section for "Your Library".
+  - Playlists including:
+    - Liked Songs with 345 songs
+    - Schrödinger ka pila by Paras
+    - Rona Mat Saif Bhai by TanhaAnjum
+    - Yaadram ki playlist by mishrasays
+    - Punjabi by Hercules 05
+    - English by Hercules 05
+- In the search results under "Rock", the following sections are shown:
+  - Tabs for All, Albums, Songs, Artists, Playlists, Podcasts & Shows, and Profiles.
+  - Under the "Songs" tab, songs with their artists and durations displayed:
+    - "Jo Bhi Main" by Mohit Chauhan (4:33)
+    - "Nadaan Parinde" by A.R. Rahman, Mohit Chauhan (6:24)
+    - "Tum Ho" by Mohit Chauhan, Suzanne D'Mello (5:16)
+    - "Phir Se Ud Chala" by
