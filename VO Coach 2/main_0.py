@@ -83,7 +83,7 @@ class OverlayWindow_0(QMainWindow):
 
 #* Button to Provide sss
         self.button2 = QPushButton('Provide SSS', self)
-        self.button2.clicked.connect(self.open_window_2)
+        self.button2.clicked.connect(self.schedule_screenshot)
         self.button2.setGeometry(10, 150, 280, 60)
         self.button2.setStyleSheet("""
             QPushButton {
@@ -165,6 +165,56 @@ class OverlayWindow_0(QMainWindow):
         self.minimized_widget.move(self.frameGeometry().topLeft())
         self.minimized_widget.show()
 
+#?Function to take screenshot and switch to window 1
+    def ss_and_switchWindow(self):
+        self.schedule_screenshot()
+        self.open_window_1()
+
+#?Adding a fxn to delay the input
+    def schedule_screenshot(self):
+        QTimer.singleShot(1000, self.prepare_screenshot)
+
+#?Hiding the window for screenshot( 1.5s )
+    def prepare_screenshot(self):
+        # Hide the entire window before taking the screenshot
+        self.hide()
+        QTimer.singleShot(1500, self.take_screenshot)
+
+#?Taking screenshots 
+    def take_screenshot(self):
+        screenshot_folder = "User_Inputs"
+        screen = QApplication.primaryScreen()
+        screenshot = screen.grabWindow(0)
+
+        file_name = "screenshot_.png"
+        file_path = os.path.join(screenshot_folder, file_name)
+        screenshot.save(file_path, 'png')
+        print(f"Screenshot saved to {file_path}")
+
+        self.show() #Show the window again
+        #!Functions to be executed after screenshot
+        self.run_script()
+
+#?Linked script to run GPT for SSS
+    def run_script(self):
+        self.open_window_2()    #Opening window 3 as soon as data recieved
+        script_path = os.path.join(os.path.dirname(__file__), 'main_1_docs.py')
+        subprocess.run(['python', script_path])
+
+# #?Function to load output after data recieved from GPT
+#     def load_text_from_file(self):
+#         Text_Folder = "./"
+#         file_path = os.path.join(Text_Folder, "output.txt")
+
+#         if os.path.exists(file_path):
+#             with open(file_path, "r") as file:
+#                 content = file.read()
+#                 self.textbox_2.setText(content)
+#         else:
+#             self.textbox_2.setText("No input file found.")
+
+
+
 #!Function to restore the main window
     def restore_main_window(self):
         self.minimized_widget.hide()
@@ -189,6 +239,7 @@ class OverlayWindow_0(QMainWindow):
 
 #!Function to open the window_2
     def open_window_2(self):
+        # self.load_text_from_file()
         self.window2 = OverlayWindow_2()  # Create an instance of Window1
         self.window2.show()
         self.hide()
@@ -261,30 +312,30 @@ class OverlayWindow_1(QMainWindow):
         """)
 
 #* Adding button2 for screenshot
-        self.button2 = QPushButton('Take Screenshot', self)
-        self.button2.setGeometry(80, 100, 200, 60)
-        self.button2.move(300, 100)
-        self.button2.clicked.connect(self.schedule_screenshot)
-        self.button2.setStyleSheet("""
-            QPushButton {
-                background-color: #958938;  /* Red background */
-                color: white;               /* White text */
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                font-weight: 800;
-                border: none;               /* No border */
-                padding: 14px 26px;         /* Some padding */
-                text-align: center;         /* Centered text */
-                text-decoration: none;      /* No underline */
-                font-size: 16px;            /* Increase font size */
-                margin: 4px 2px;            /* Some margin */
-                border-radius: 6px;
-            }
-            QPushButton:hover {
-                background-color: white;    /* White background on hover */
-                color: black;               /* Black text on hover */
-                border: 2px solid #f44336;  /* Red border on hover */
-            }
-        """)
+        # self.button2 = QPushButton('Take Screenshot', self)
+        # self.button2.setGeometry(80, 100, 200, 60)
+        # self.button2.move(300, 100)
+        # self.button2.clicked.connect(self.schedule_screenshot)
+        # self.button2.setStyleSheet("""
+        #     QPushButton {
+        #         background-color: #958938;  /* Red background */
+        #         color: white;               /* White text */
+        #         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        #         font-weight: 800;
+        #         border: none;               /* No border */
+        #         padding: 14px 26px;         /* Some padding */
+        #         text-align: center;         /* Centered text */
+        #         text-decoration: none;      /* No underline */
+        #         font-size: 16px;            /* Increase font size */
+        #         margin: 4px 2px;            /* Some margin */
+        #         border-radius: 6px;
+        #     }
+        #     QPushButton:hover {
+        #         background-color: white;    /* White background on hover */
+        #         color: black;               /* Black text on hover */
+        #         border: 2px solid #f44336;  /* Red border on hover */
+        #     }
+        # """)
 
 #* Adding textBox_1
         self.textbox = QLineEdit(self)
@@ -309,7 +360,7 @@ class OverlayWindow_1(QMainWindow):
 #* Button-3 to enter and store the text into the a .txt file
         self.button3 = QPushButton('Enter', self)
         self.button3.setGeometry(400, 15, 100, 40)
-        self.button3.clicked.connect(self.save_input)
+        self.button3.clicked.connect(self.SS_and_saveInput)
         self.button3.setStyleSheet("""
             QPushButton {
                 background-color: #1ea2bd;  /* Red background */
@@ -379,28 +430,36 @@ class OverlayWindow_1(QMainWindow):
         """)
 
 #* Button-5 to run the script for the GPT (To be combined with run screenshots)
-        self.button5 = QPushButton('Run GPT', self)
-        self.button5.setGeometry(400, 155, 100, 40)
-        self.button5.clicked.connect(self.run_script)
-        self.button5.setStyleSheet("""
-            QPushButton {
-                background-color: #958938;  /* Red background */
-                color: white;               /* White text */
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                font-weight: 800;
-                border: none;               /* No border */
-                text-align: center;         /* Centered text */
-                text-decoration: none;      /* No underline */
-                font-size: 16px;            /* Increase font size */
-                margin: 4px 2px;            /* Some margin */
-                border-radius: 6px;
-            }
-            QPushButton:hover {
-                background-color: white;    /* White background on hover */
-                color: black;               /* Black text on hover */
-                border: 2px solid #f44336;  /* Red border on hover */
-            }
-        """)
+        # self.button5 = QPushButton('Run GPT', self)
+        # self.button5.setGeometry(400, 155, 100, 40)
+        # self.button5.clicked.connect(self.run_script)
+        # self.button5.setStyleSheet("""
+        #     QPushButton {
+        #         background-color: #958938;  /* Red background */
+        #         color: white;               /* White text */
+        #         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        #         font-weight: 800;
+        #         border: none;               /* No border */
+        #         text-align: center;         /* Centered text */
+        #         text-decoration: none;      /* No underline */
+        #         font-size: 16px;            /* Increase font size */
+        #         margin: 4px 2px;            /* Some margin */
+        #         border-radius: 6px;
+        #     }
+        #     QPushButton:hover {
+        #         background-color: white;    /* White background on hover */
+        #         color: black;               /* Black text on hover */
+        #         border: 2px solid #f44336;  /* Red border on hover */
+        #     }
+        # """)
+
+
+#?Function to save input, take screenshot_and_userQuery
+    def SS_and_saveInput(self):
+        self.save_input()
+        self.clear_input()
+        self.schedule_screenshot()
+
     
 #!Saving Textbox input
     def save_input(self):
@@ -491,8 +550,8 @@ class OverlayWindow_2(QMainWindow):
     def __init__(self):
         super().__init__()
         self.initUI()
-        # self.load_text_from_file()  # Load text when initializing of sss
-        self.load_text_from_file_2()
+        self.load_text_from_file()  # Load text when initializing of sss
+        # self.load_text_from_file_2()
 
     def initUI(self):
         self.setWindowTitle('Overlay')

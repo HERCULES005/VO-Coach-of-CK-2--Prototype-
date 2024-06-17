@@ -1,25 +1,24 @@
-The image depicts an open window of Visual Studio Code (VSCode) with the following details:
-
-- **Explorer Section:**
-  - Shows a file structure under "VO Coach of CK-2 (PROTOTYPE)".
-  - Subdirectories and files listed within the project include "User_Inputs," "Fonts," "screenshot_png," and "user_Input.txt."
-
-- **Main Editing Area:**
-  - The file "main_0.py" is open and active.
-  - Code relates to a class named `OverlayWindow`.
-  - The code defines several methods and buttons.
-  - Buttons to "Provide SSS," "Quit," and other functionality.
-  - Functions to quit the window and load output in another window.
-  
-- **Terminal:**
-  - A warning message indicating that PowerShell detected a possible screen reader usage, which disabled a feature.
-  - The terminal includes execution of a Python script from the directory "C:\Users\Hercules\Desktop\VO Coach of CK-2 (Prototype)" using Python version 3.12.3.
-  - User input in the terminal: "hello what is on the screen saved."
-
-- **Status Bar:**
-  - Displays the file path of the currently open file.
-  - Indicates that the VSCode is using Python and PowerShell.
-  - Shows the current line and column number, indentation settings, and file format (CRLF).
-
-- **Other UI Elements:**
-  - Top menu bar
+- The image shows a Visual Studio Code (VS Code) workspace.
+- There is a left sidebar with the "EXPLORER" tab opened, showing a list of files and folders, including:
+  - `User_Inputs`
+  - `Fonts`
+  - Various Python files (`main_1.py`, `main_1_ocr.py`, etc.)
+  - README.md
+  - embeddings_output.txt
+  - Tasks.txt
+- The main focus is on the editor area, showing a Python script `main_0.py`.
+- The script includes several function calls (`button1`, `button2`, etc.) and some comments explaining the code.
+- The top of the editor area shows multiple open tabs, including:
+  - `main_1_docs.py`
+  - `main_1.py`
+  - `main_0.py` (currently active)
+  - `embeddings_output.txt`
+  - `main_5_minimizeButton.py`
+- Overlays on the screen with buttons labeled:
+  - "Enter"
+  - "Clear"
+  - "Talk to me"
+  - "Window 2"
+  - "Window 0"
+- There's a terminal open at the bottom of the workspace, showing some execution output and error messages.
+- The status bar at the bottom indicates the file type as Python ('.py') and some other details like line number and text encoding.
