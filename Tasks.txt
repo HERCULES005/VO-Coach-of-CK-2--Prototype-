@@ -1,7 +1,7 @@
 - [] Using gpt 2 tasks are performed- 
 a) **SS Summary   :Done (almost)
 b)**SS related top questions (to be Done)
-- [ ] The SSQ are displayed on the frontend with a text bar for user to write his own input. —> userQuery(text)
+- [ ] The SSQ are displayed on the frontend with a text bar for user to write his own input. —> userQuery(text)**
 - [ ] Now the SSS and userQuery are converted to embeddings which are compared to find the top 3 Categories related—> 3 cats
 - [ ] The 3 cats are then used to call the 3 jsons (the save file of ck2 is divided into 34 jsons for each of its category)
 - [ ] Player ID filter uses 2 categories->
@@ -12,3 +12,32 @@ these categories are parsed to find data related to player ID and its related c
 To be done 
 parsing
 textbox representing text 
+
+minimization of app
+suggestion buttons 
+Text-box query
+
+
+convert output to embeddings
+display top 3 suggestion acc to gpt
+including user input for extra query 
+
+if only ss then top suggestions and Summary(only gpt basis) => frontend part will be done in 2hr
+
+sss + userinput =>concatenate =>embedding . embedding(wiki guide) => 
+
+Completed tasks
+SS Summary is also provided into a txt file named as output.txt 
+Answers to user query exported into a txt file as output_Assistant
+player filter => identity and Relational data to be searched in top 3 categories
+combined output for the textbox and SSS
+
+Still Remaining 
+Combining the button to run multiple function simultaneously
+Top 3 suggestion according to gpt to be displayed as butttons and gpt will provide a description acc to that
+DOT product of embedding1(wiki guide) . embedding2(SSS + userinput => embedding made in file embedding_output.txt )
+
+
+
+
+

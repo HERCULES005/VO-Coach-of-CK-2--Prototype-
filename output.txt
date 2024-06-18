@@ -1,11 +1,24 @@
-This image shows a computer screen displaying an integrated development environment (IDE), specifically Visual Studio Code (VS Code), with a code file open. The file is named `main_0.py` and appears to contain Python code for creating a GUI (Graphical User Interface) application using PyQt5, a set of Python bindings for the Qt application framework.
+The image depicts a screenshot of the Visual Studio Code environment working on a Python project. Below is a detailed description of the screenshot content:
 
-The code includes a class definition for `OverlayWindow1` which inherits from `QMainWindow`. The class contains methods for initializing the window properties such as setting the window title, size, and style. There's also a QPushButton added to the window, and some CSS styling applied for the button, including a background color, text color, and font properties.
-
-On the left-hand side, there's a sidebar showing more files and folders in the project, with a folder named "VO Coach CK 2 (Prototype)" and several Python files, indicating this might be part of a larger software project or prototype related to an application named "VO Coach".
-
-There's also an output panel open at the bottom showing messages about unknown properties, which may indicate that there are some issues or warnings that need to be addressed in the code or the CSS related to the properties like 'cursor' and 'display'.
-
-The debugging and settings toolbar is visible at the top, with icons for managing the coding environment and controlling the execution of applications.
-
-Overall, the image depicts a typical setup and workflow for a software developer working on a graphical application in Python with PyQt5 in the VS
+- **Editor:**
+  - Visual Studio Code (VS Code) interface in use.
+  - Left sidebar showing files in the project directory.
+    - Folders and files include:
+      - `User_Inputs`
+      - `Fonts`
+      - `screenshot.png`
+      - `User_Input.txt`
+      - Several Python files such as `main_0.py`, `main_1_docs.py`, `main_1_combined_Text_SSS.py`, `main_2_AddedBackend.py`, etc.
+  - The main editor window is displaying the `main_1_docs.py` file.
+    - Python code defining a class `OverlayWindow2`, inheriting from `QMainWindow`.
+    - The code contains UI setup with button styling and text box initialization comments.
+- **Overlay Window:**
+  - Black background with green text:
+    - Describes the context stating that it's a Python project developed in VS Code with a script named `main_0.py`.
+    - Mention of UI setup and a terminal response indicating an event loop is already running.
+  - Buttons:
+    - `Window 1 clr` (lavender color)
+    - `Window 1` (light blue color)
+    - `Window 1` (light blue color)
+    - `Window 1` (light blue color)
+    - `
