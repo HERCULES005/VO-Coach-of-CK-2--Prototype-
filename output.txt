@@ -1,24 +1,30 @@
-The image depicts a screenshot of the Visual Studio Code environment working on a Python project. Below is a detailed description of the screenshot content:
+The image is a screenshot of a Visual Studio Code (VS Code) workspace. Here's a description of what is visible in the image:
 
-- **Editor:**
-  - Visual Studio Code (VS Code) interface in use.
-  - Left sidebar showing files in the project directory.
-    - Folders and files include:
-      - `User_Inputs`
-      - `Fonts`
-      - `screenshot.png`
-      - `User_Input.txt`
-      - Several Python files such as `main_0.py`, `main_1_docs.py`, `main_1_combined_Text_SSS.py`, `main_2_AddedBackend.py`, etc.
-  - The main editor window is displaying the `main_1_docs.py` file.
-    - Python code defining a class `OverlayWindow2`, inheriting from `QMainWindow`.
-    - The code contains UI setup with button styling and text box initialization comments.
-- **Overlay Window:**
-  - Black background with green text:
-    - Describes the context stating that it's a Python project developed in VS Code with a script named `main_0.py`.
-    - Mention of UI setup and a terminal response indicating an event loop is already running.
-  - Buttons:
-    - `Window 1 clr` (lavender color)
-    - `Window 1` (light blue color)
-    - `Window 1` (light blue color)
-    - `Window 1` (light blue color)
-    - `
+- **Explorer Pane (Left Side)**:
+  - Shows a project directory named "VO Coach of CK-2 (Prototype)".
+  - Subfolders and files visible include:
+    - User_Inputs
+      - Fonts
+      - screenshot_png
+      - User_Input.txt
+    - VO Coach 2
+      - main_0_copy.py
+      - main_0_overlayWindow_2.py
+      - main_0.py
+      - main_1_combined_Text_SSS.py
+      - main_1_docs.py
+      - main_2_facescrect_Ntop.py
+      - main_3_textOutput.py
+      - main_4_embed_UI_sss.py
+      - main_5_minimizeButton.py
+    - Other files include embeddings_output.txt, output_Assistant.txt, output.txt, README.md, suggestionBox.py, Tasks.txt
+
+- **Main Editor Pane (Center)**:
+  - The file `main_0.py` is open and displayed.
+  - The Python class `OverlayWindow_0` is partially visible, showing the `def initUI(self):` method.
+  - The code includes styles and settings for `QPushButton` and some label settings.
+
+- **Tab Bar**:
+  - Multiple tabs are open including:
+    - main_3_textOutput.py
+    -

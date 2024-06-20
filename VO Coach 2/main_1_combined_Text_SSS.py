@@ -5,7 +5,7 @@ import requests
 import json
 
 # OpenAI API Key
-openai.api_key = "sk-proj-SCZ8qegWu2hEGGWlgbyJT3BlbkFJj7Pqi8BYVJUBO4qVX1Aq"
+openai.api_key = "sk-proj-sCeQ2SU6fWh2wTluOETfT3BlbkFJIqGF8dcW1gFkKI12r1Bj"
 
 start = time.time()
 
