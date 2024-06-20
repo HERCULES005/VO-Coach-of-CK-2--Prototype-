@@ -37,7 +37,12 @@ Combining the button to run multiple function simultaneously
 Top 3 suggestion according to gpt to be displayed as butttons and gpt will provide a description acc to that
 DOT product of embedding1(wiki guide) . embedding2(SSS + userinput => embedding made in file embedding_output.txt )
 
+user input + sss embedding call each time new embeddings everytime;
+dot prodcut with json( categories embedding) , variables,yt advice,
 
-
+ui ,sss ,natural language description, yt advice
+ (ui+ sss .categories) => top 3 categories 
+ (ui +sss . variables) => top n variables (marked upto a threshold value)
+ (ui +sss . yt advice) => top yt advice embedding's ranking
 
 

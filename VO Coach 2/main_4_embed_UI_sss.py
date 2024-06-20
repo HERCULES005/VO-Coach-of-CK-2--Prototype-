@@ -4,9 +4,9 @@ import json
 # file paths
 file_path1 = './User_Inputs/user_Input.txt'
 file_path2 = 'output.txt'
-output_file_path = 'embeddings_output.txt'
+output_file_path = 'embeddings_output_2.txt'
 
-openai.api_key = 'sk-proj-SCZ8qegWu2hEGGWlgbyJT3BlbkFJj7Pqi8BYVJUBO4qVX1Aq'
+openai.api_key = 'sk-proj-sCeQ2SU6fWh2wTluOETfT3BlbkFJIqGF8dcW1gFkKI12r1Bj'
 
 with open(file_path1, 'r', encoding='latin-1') as f: #Utf-8 encoding wont work somehow so latin-1 encoding is dont to read the input
     text1 = f.read()
